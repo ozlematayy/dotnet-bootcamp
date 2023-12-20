@@ -1,0 +1,15 @@
+﻿using DotnetBootcamp.Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DotnetBootcamp.Core.Repositories
+{
+    public interface IUserProfileRepository:IGenericRepository<UserProfile>
+    {
+
+    }
+}
