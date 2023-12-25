@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DotnetBootcamp.Core.DTOs;
+using DotnetBootcamp.Core.DTOs.Authentication;
 using DotnetBootcamp.Core.Models;
 using DotnetBootcamp.Core.Services;
 using Microsoft.AspNetCore.Http;
@@ -33,13 +34,7 @@ namespace DotnetBootcamp.API.Controllers
             var userDto = _mapper.Map<UserDto>(user);
             return CreateActionResult(GlobalResultDto<UserDto>.Success(200,userDto));
         }
-        [HttpPost]
-        public async Task<IActionResult> Save(UserDto userDto)
-        {
-            var user = await _userService.AddAsync(_mapper.Map<User>(userDto));
-            var userDtos = _mapper.Map<UserDto>(user);
-            return CreateActionResult(GlobalResultDto<UserDto>.Success(201, userDtos));
-        }
+
         [HttpPut]
         public async Task<IActionResult> Update(UserDto userDto)
         {
@@ -52,6 +47,24 @@ namespace DotnetBootcamp.API.Controllers
             var user = await _userService.GetById(id);
             await _userService.RemoveAsync(user);
             return CreateActionResult(GlobalResultDto<NoContentDto>.Success(204));
+        }
+
+        [HttpPost("Signup")]
+        public async Task<IActionResult> SignUp(AuthRequestDto authRequestDto)
+        {
+            var user = _userService.SignUp(authRequestDto);
+            var userDto = _mapper.Map<UserDto>(user);
+            return CreateActionResult(GlobalResultDto<UserDto>.Success(201, userDto));
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login(AuthRequestDto authDto)
+        {
+            var result = _userService.Login(authDto);
+            if (result.User != null)
+                return CreateActionResult(GlobalResultDto<AuthResponseDto>.Success(200, result));
+            else
+                return CreateActionResult(GlobalResultDto<AuthResponseDto>.Success(401, result));
         }
     }
 }

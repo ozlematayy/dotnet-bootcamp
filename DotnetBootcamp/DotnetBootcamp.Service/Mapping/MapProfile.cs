@@ -18,6 +18,8 @@ namespace DotnetBootcamp.Service.Mapping
             CreateMap<UserProfile, UserProfileDto>().ReverseMap();
 
             CreateMap<TeamDto, Team>();
+            CreateMap<UserDto, User>();
+            CreateMap<UserProfileDto, UserProfile>();
         }
     }
 }
