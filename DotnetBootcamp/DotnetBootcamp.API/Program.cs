@@ -24,14 +24,15 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
 builder.Services.AddControllers()
     .AddFluentValidation(x =>
     {
         x.RegisterValidatorsFromAssemblyContaining<TeamDtoValidator>();
-        x.RegisterValidatorsFromAssemblyContaining<UserDtoValidator>();
-        x.RegisterValidatorsFromAssemblyContaining<UserProfileDtoValidator>();
+       // x.RegisterValidatorsFromAssemblyContaining<UserDtoValidator>();
+       // x.RegisterValidatorsFromAssemblyContaining<UserProfileDtoValidator>();
     });
 
 builder.Services.AddDbContext<AppDbContext>(x =>
